@@ -14,6 +14,39 @@ export function users(state = {}, action) {
             return {
                 error: action.error
             };
+
+
+
+            //getallComapnies start
+            case userConstants.GETALLC_REQUEST:
+                return {
+                    loading: true
+                };
+            case userConstants.GETALLC_SUCCESS:
+                return {
+                    items: action.companies
+                };
+            case userConstants.GETALLC_FAILURE:
+                return {
+                    error: action.error
+                };
+        //     case userConstants.COMPANY_REQUEST:
+        //     return {
+        //         loading: true
+        //     };
+        // case userConstants.COMPANY_SUCCESS:
+        //     return {
+        //         loggedIn: true,
+        //         items: action.companies
+        //     };
+        // case userConstants.COMPANY_FAILURE:
+        //     return {
+        //         error: action.error
+        //     };
+            //getallCompanies End
+
+
+
         case userConstants.DELETE_REQUEST:
             // add 'deleting:true' property to user being deleted
             return {

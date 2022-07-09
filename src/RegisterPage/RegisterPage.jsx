@@ -9,7 +9,8 @@ function RegisterPage() {
         firstName: '',
         lastName: '',
         username: '',
-        password: ''
+        password: '',
+        role:''
     });
     const [submitted, setSubmitted] = useState(false);
     const registering = useSelector(state => state.registration.registering);
@@ -29,7 +30,7 @@ function RegisterPage() {
         e.preventDefault();
 
         setSubmitted(true);
-        if (user.firstName && user.lastName && user.username && user.password) {
+        if (user.firstName && user.lastName && user.username && user.password, user.role) {
             dispatch(userActions.register(user));
         }
     }
@@ -64,6 +65,13 @@ function RegisterPage() {
                     <input type="password" name="password" value={user.password} onChange={handleChange} className={'form-control' + (submitted && !user.password ? ' is-invalid' : '')} />
                     {submitted && !user.password &&
                         <div className="invalid-feedback">Password is required</div>
+                    }
+                </div>
+                <div className="form-group">
+                    <label>Role</label>
+                    <input type="text" name="role" value={user.role} onChange={handleChange} className={'form-control' + (submitted && !user.role ? ' is-invalid' : '')} />
+                    {submitted && !user.role &&
+                        <div className="invalid-feedback">Role is required</div>
                     }
                 </div>
                 <div className="form-group">

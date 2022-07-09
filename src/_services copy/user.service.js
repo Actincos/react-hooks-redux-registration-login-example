@@ -12,9 +12,7 @@ export const userService = {
     company,
     getAllC,
     branch,
-    getCompanyBranches,
     department,
-    companyProcess,
 };
 
 function login(username, password) {
@@ -46,7 +44,7 @@ function getAll() {
     };
 
     return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
-    return fetch(`${config.apiUrl}/company/allComapny`, requestOptions).then(handleResponse);
+    // return fetch(`${config.apiUrl}/company/allComapny`, requestOptions).then(handleResponse);
 }
 
 function getById(id) {
@@ -59,7 +57,6 @@ function getById(id) {
 }
 
 function register(user) {
-    console.log("user service=>", user)
     const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -109,11 +106,11 @@ function handleResponse(response) {
 
 
 //add new company 
-function company(userid,businessname, businessnature,industry) {
+function company(companyid,businessname, businessnature,industry) {
     const requestOptions = {
         method: 'POST',
         headers: {...authHeader(), 'Content-Type': 'application/json'},
-        body: JSON.stringify({userid, businessname, businessnature,industry})
+        body: JSON.stringify({companyid, businessname, businessnature,industry})
     };
 
     return fetch(`${config.apiUrl}/company/addCompany`, requestOptions)
@@ -124,41 +121,33 @@ function company(userid,businessname, businessnature,industry) {
          });
 }
 
-function getAllC(id) {
-    console.log("allC", id);
+function getAllC() {
     const requestOptions = {
         method: 'GET',
         headers: authHeader()
     };
 
     // return fetch(`${config.apiUrl}/users`, requestOptions).then(handleResponse);
-    return fetch(`${config.apiUrl}/company/allComapny/${id}`, requestOptions).then(handleResponse);
+    return fetch(`${config.apiUrl}/company/allComapny`, requestOptions).then(handleResponse);
 }
 
 //add new branch
-function branch(userid,companyid,branchname, businessservices) {
-    console.log("here is the branch service FE",userid,companyid,branchname, businessservices)
+function branch(companyid,branchname, businessservices) {
+    console.log("here is the branch service FE")
     const requestOptions = {
         method: 'POST',
         headers: {...authHeader(), 'Content-Type': 'application/json'},
-        body: JSON.stringify({userid, companyid, branchname, businessservices})
+        body: JSON.stringify({companyid, branchname, businessservices})
     };
 
-    return fetch(`${config.apiUrl}/branches/addBranch`, requestOptions)
+    return fetch(`${config.apiUrl}/branch/addBranch`, requestOptions)
         .then(handleResponse)
         .then(branch => {
             console.log("here is the api response", branch)
             return branch;
          });
 }
-//get branches
-function getCompanyBranches() {
-    const requestOptions = {
-        method: 'GET',
-        headers: authHeader()
-    };
-    return fetch(`${config.apiUrl}/branches/allbranches`, requestOptions).then(handleResponse);
-}
+
 //add new department
 function department(companyid,departmentname) {
     console.log("here is the branch service FE")
@@ -173,23 +162,5 @@ function department(companyid,departmentname) {
         .then(dept => {
             console.log("here is the api response", dept)
             return dept;
-         });
-}
-
-//add new companyProcess
-
-function companyProcess(companyid,code, description ,stepnumber, ismandatory) {
-    console.log("in user service", companyid,code, description ,stepnumber, ismandatory)
-    const requestOptions = {
-        method: 'POST',
-        headers: {...authHeader(), 'Content-Type': 'application/json'},
-        body: JSON.stringify({companyid,code, description ,stepnumber, ismandatory})
-    };
-
-    return fetch(`${config.apiUrl}/companyProcess/addCompanyProcess`, requestOptions)
-        .then(handleResponse)
-        .then(companyprocess=> {
-            console.log("here is the api response", companyprocess)
-            return companyprocess;
          });
 }
